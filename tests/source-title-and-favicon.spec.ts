@@ -14,6 +14,11 @@ test("a source added with no name is shown by its page title and favicon", async
 	await expect(page.getByRole("textbox", { name: "Title" })).toHaveValue(
 		"Sorzs Sample Page",
 	);
+	await expect(
+		page
+			.getByRole("dialog")
+			.getByRole("img", { name: `Favicon of ${address}` }),
+	).toBeVisible();
 	await page.getByRole("button", { name: "Add", exact: true }).click();
 
 	const sideBar = page.getByRole("complementary", { name: "Sources" });
