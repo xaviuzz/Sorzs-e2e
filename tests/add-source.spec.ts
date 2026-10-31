@@ -9,8 +9,8 @@ test("a source added through the dialog is still listed after a reload", async (
 	await page.goto("/");
 
 	await page.getByRole("button", { name: "Add Sorz" }).click();
-	await page.getByRole("textbox", { name: "Address" }).fill(address);
-	await page.getByRole("textbox", { name: "Name" }).fill(name);
+	await page.getByRole("textbox", { name: "URL" }).fill(address);
+	await page.getByRole("textbox", { name: "Title" }).fill(name);
 	await page.getByRole("button", { name: "Add", exact: true }).click();
 
 	const sideBar = page.getByRole("complementary", { name: "Sources" });

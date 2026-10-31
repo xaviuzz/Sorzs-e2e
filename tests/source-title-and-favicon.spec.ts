@@ -9,9 +9,9 @@ test("a source added with no name is shown by its page title and favicon", async
 	await page.goto("/");
 
 	await page.getByRole("button", { name: "Add Sorz" }).click();
-	await page.getByRole("textbox", { name: "Address" }).fill(address);
-	await page.getByRole("textbox", { name: "Name" }).click();
-	await expect(page.getByRole("textbox", { name: "Name" })).toHaveValue(
+	await page.getByRole("textbox", { name: "URL" }).fill(address);
+	await page.getByRole("textbox", { name: "Title" }).click();
+	await expect(page.getByRole("textbox", { name: "Title" })).toHaveValue(
 		"Sorzs Sample Page",
 	);
 	await page.getByRole("button", { name: "Add", exact: true }).click();

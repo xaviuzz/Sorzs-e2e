@@ -8,8 +8,8 @@ test("a collapsed sidebar shows only the icon of each source", async ({
 	const name = `Source ${unique}`;
 	await page.goto("/");
 	await page.getByRole("button", { name: "Add Sorz" }).click();
-	await page.getByRole("textbox", { name: "Address" }).fill(address);
-	await page.getByRole("textbox", { name: "Name" }).fill(name);
+	await page.getByRole("textbox", { name: "URL" }).fill(address);
+	await page.getByRole("textbox", { name: "Title" }).fill(name);
 	await page.getByRole("button", { name: "Add", exact: true }).click();
 	const sideBar = page.getByRole("complementary", { name: "Sources" });
 	await expect(sideBar.getByText(name)).toBeVisible();
