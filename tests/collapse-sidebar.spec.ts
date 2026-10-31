@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("a collapsed sidebar shows only the initial of each source", async ({
+test("a collapsed sidebar shows only the icon of each source", async ({
 	page,
 }) => {
 	const unique = crypto.randomUUID();
@@ -18,5 +18,5 @@ test("a collapsed sidebar shows only the initial of each source", async ({
 
 	await expect(sideBar.getByText(name)).toBeHidden();
 	const entry = sideBar.getByRole("listitem").filter({ hasText: name });
-	await expect(entry.getByText("S", { exact: true })).toBeVisible();
+	await expect(entry.getByRole("img", { name: "No favicon" })).toBeVisible();
 });
