@@ -3,9 +3,9 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"e2e": "docker compose up --build --abort-on-container-exit --exit-code-from e2e",
+		"e2e": "docker compose -f compose.yaml -f compose.sample-site.yaml up --build --abort-on-container-exit --exit-code-from e2e",
 		"up": "docker compose up --build --wait --detach backend frontend",
-		"down": "docker compose down",
+		"down": "docker compose -f compose.yaml -f compose.sample-site.yaml down",
 		"lint": "biome check .",
 		"typecheck": "tsc --noEmit"
 	},

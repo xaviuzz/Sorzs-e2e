@@ -1,0 +1,27 @@
+services:
+  sample-site:
+    image: mcr.microsoft.com/playwright:v1.64.1-noble
+    network_mode: host
+    working_dir: /site
+    volumes:
+      - ./sample-site:/site:ro
+    environment:
+      PORT: ${SAMPLE_SITE_PORT:-5373}
+    command: node server.mjs
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - |
+          fetch("http://localhost:${SAMPLE_SITE_PORT:-5373}/").then((reply) => process.exit(reply.ok ? 0 : 1), () => process.exit(1));
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  e2e:
+    environment:
+      SAMPLE_SITE_URL: http://localhost:${SAMPLE_SITE_PORT:-5373}
+    depends_on:
+      sample-site:
+        condition: service_healthy
