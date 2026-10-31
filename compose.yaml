@@ -1,0 +1,57 @@
+services:
+  backend:
+    build:
+      context: ${BACKEND_DIR:-../backend}
+      network: host
+    network_mode: host
+    environment:
+      PORT: ${BACKEND_PORT:-3100}
+    healthcheck:
+      test:
+        - CMD
+        - bun
+        - -e
+        - |
+          const reply = await fetch("http://localhost:${BACKEND_PORT:-3100}/health.check", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ header: { callId: "healthcheck" } }) });
+          process.exit(reply.ok ? 0 : 1);
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  frontend:
+    build:
+      context: ${FRONTEND_DIR:-../frontend}
+      network: host
+    network_mode: host
+    environment:
+      PORT: ${FRONTEND_PORT:-5273}
+      API_URL: http://localhost:${BACKEND_PORT:-3100}
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - bun
+        - -e
+        - |
+          const reply = await fetch("http://localhost:${FRONTEND_PORT:-5273}/");
+          process.exit(reply.ok ? 0 : 1);
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  e2e:
+    image: mcr.microsoft.com/playwright:v1.64.1-noble
+    network_mode: host
+    working_dir: /e2e
+    volumes:
+      - .:/e2e
+    environment:
+      BASE_URL: http://localhost:${FRONTEND_PORT:-5273}
+    command: npx playwright test
+    depends_on:
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy

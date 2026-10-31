@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          path: e2e
+      - uses: actions/checkout@v7
+        with:
+          repository: xaviuzz/Sorzs-backend
+          path: backend
+      - uses: actions/checkout@v7
+        with:
+          repository: xaviuzz/Sorzs-frontend
+          path: frontend
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run e2e
+        env:
+          COMPOSE_BAKE: "false"
