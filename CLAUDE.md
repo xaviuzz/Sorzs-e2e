@@ -17,7 +17,7 @@ Node and npm, not Bun: Playwright on Bun is not the supported path. Dependencies
 
 ## Happy path only
 
-A new test needs a reason it cannot live in `backend/` or `frontend/`: e2e is slow and brittle, and those repos already cover the red and neutral states. Query by role, never by CSS.
+A new test needs a reason it cannot live in `backend/` or `frontend/`: e2e is slow and brittle, and those repos already cover the red and neutral states. Query by role, never by CSS. A password field has no role: query it with `getByLabel`.
 
 An e2e step for behavior already built has no natural red. Write the test with a deliberate fault (a wrong locator), watch it fail, then correct it. This proves the test can fail without touching product code.
 
