@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { logIn } from "./login";
 
 const sampleSite = process.env.SAMPLE_SITE_URL ?? "http://localhost:5373";
 
@@ -6,7 +7,7 @@ test("a candidate picked from a deep address is added with its own title", async
 	page,
 }) => {
 	const deepAddress = `${sampleSite}/${crypto.randomUUID()}/docs/guide`;
-	await page.goto("/");
+	await logIn(page);
 
 	await page.getByRole("button", { name: "Add Sorz" }).click();
 	await page.getByRole("textbox", { name: "URL" }).fill(deepAddress);

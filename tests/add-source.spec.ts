@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { logIn } from "./login";
 
 test("a source added through the dialog is still listed after a reload", async ({
 	page,
@@ -6,7 +7,7 @@ test("a source added through the dialog is still listed after a reload", async (
 	const unique = crypto.randomUUID();
 	const address = `https://${unique}.example.com`;
 	const name = `Source ${unique}`;
-	await page.goto("/");
+	await logIn(page);
 
 	await page.getByRole("button", { name: "Add Sorz" }).click();
 	await page.getByRole("textbox", { name: "URL" }).fill(address);

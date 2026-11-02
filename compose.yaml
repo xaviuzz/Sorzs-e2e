@@ -6,6 +6,9 @@ services:
     network_mode: host
     environment:
       PORT: ${BACKEND_PORT:-3100}
+      AUTH_SECRET: e2e-secret
+      SEED_USER: xaviuzz
+      SEED_PASSWORD: p1casso
     healthcheck:
       test:
         - CMD

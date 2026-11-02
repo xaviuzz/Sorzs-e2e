@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { logIn } from "./login";
 
 test("a search shows a Google link limited to the site of the added source", async ({
 	page,
@@ -7,7 +8,7 @@ test("a search shows a Google link limited to the site of the added source", asy
 	const host = `${unique}.example.com`;
 	const name = `Source ${unique}`;
 	const query = `sorzs ${unique}`;
-	await page.goto("/");
+	await logIn(page);
 	await page.getByRole("button", { name: "Add Sorz" }).click();
 	await page.getByRole("textbox", { name: "URL" }).fill(`https://${host}/docs`);
 	await page.getByRole("textbox", { name: "Title" }).fill(name);
