@@ -23,4 +23,4 @@ An e2e step for behavior already built has no natural red. Write the test with a
 
 A change to a role, label or visible text that specs already query (a link that becomes a button, an initial that becomes an icon) edits every such spec. Search `tests/` for the old role before the first run.
 
-The backend keeps its list in memory while the stack is up: a spec that adds data builds its address and name from a fresh UUID so reruns do not collide. After `npm run e2e`, run `npm run down`; the exited containers stay otherwise. Backend and frontend exit 139 on the final SIGTERM; read the result of the `e2e` service only.
+The backend keeps its list in its container, with no volume, until `npm run down` removes it: a spec that adds data builds its address and name from a fresh UUID so reruns do not collide. After `npm run e2e`, run `npm run down`; the exited containers stay otherwise. Backend and frontend exit 139 on the final SIGTERM; read the result of the `e2e` service only.
