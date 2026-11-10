@@ -6,7 +6,7 @@ Playwright end-to-end tests for Sorzs, run against `backend/` and `frontend/` co
 
 - `npm run e2e`: `docker compose -f compose.yaml -f compose.sample-site.yaml up --build --abort-on-container-exit --exit-code-from e2e`; builds `../backend` and `../frontend` (override with `BACKEND_DIR`, `FRONTEND_DIR`) and runs Playwright in the `e2e` service. Services and image builds use host networking (bridge fails in this sandbox) on ports 3100, 5273 and 5373 (`BACKEND_PORT`, `FRONTEND_PORT`, `SAMPLE_SITE_PORT`); free those ports first. `compose.sample-site.yaml` adds `sample-site/`, a page with a title and an icon that the backend reads, its title set by the last segment of the path (`/` Sorzs Home, `docs` Sorzs Docs, `guide` Sorzs Guide, any other Sorzs Sample Page); `up` leaves it out. Its image tag is the Playwright one: bump it with the others
 - `npm run up`: builds and starts only backend and frontend, detached and healthy, for trying the web by hand against the backend at `http://localhost:5273`. `npm run down` stops and removes them, and the sample site if `e2e` started it. Same ports as `e2e`; run `down` before `e2e`
-- `npm run lint`: Biome check; `npx biome check --write .` fixes
+- `npm run lint`: Biome check and the language check (`lint:language`, no word "source" under `tests/` except files listed in `language-exceptions.txt`); `npx biome check --write .` fixes
 - `npm run typecheck`: `tsc --noEmit`
 
 A change is done when lint and typecheck pass and `npm run e2e` is green.
@@ -25,4 +25,4 @@ A change to a role, label or visible text that specs already query (a link that 
 
 The backend keeps its list in its container, with no volume, until `npm run down` removes it: a spec that adds data builds its address and name from a fresh UUID so reruns do not collide. After `npm run e2e`, run `npm run down`; the exited containers stay otherwise. Backend and frontend exit 139 on the final SIGTERM; read the result of the `e2e` service only.
 
-Specs share one backend and run in parallel. `multiuser.spec.ts` expects `ana`'s list empty, so a spec that registers sources creates its own user in the backoffice (`registerUser` in `backoffice-sorzs.spec.ts`) and never writes to `ana`.
+Specs share one backend and run in parallel. `multiuser.spec.ts` expects `ana`'s list empty, so a spec that registers sorzs creates its own user in the backoffice (`registerUser` in `backoffice-sorzs.spec.ts`) and never writes to `ana`.
