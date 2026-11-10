@@ -19,6 +19,6 @@ test("a candidate picked from a deep address is added with its own title", async
 	);
 	await page.getByRole("button", { name: "Add", exact: true }).click();
 
-	const sideBar = page.getByRole("complementary", { name: "Sources" });
+	const sideBar = page.getByRole("complementary", { name: "Sorzs" });
 	await expect(sideBar.getByText("Sorzs Home")).toBeVisible();
 });

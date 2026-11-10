@@ -1,19 +1,19 @@
 import { expect, test } from "@playwright/test";
 import { logIn } from "./login";
 
-test("a search shows a Google link limited to the site of the added source", async ({
+test("a search shows a Google link limited to the site of the added sorz", async ({
 	page,
 }) => {
 	const unique = crypto.randomUUID();
 	const host = `${unique}.example.com`;
-	const name = `Source ${unique}`;
+	const name = `Sorz ${unique}`;
 	const query = `sorzs ${unique}`;
 	await logIn(page);
 	await page.getByRole("button", { name: "Add Sorz" }).click();
 	await page.getByRole("textbox", { name: "URL" }).fill(`https://${host}/docs`);
 	await page.getByRole("textbox", { name: "Title" }).fill(name);
 	await page.getByRole("button", { name: "Add", exact: true }).click();
-	const sideBar = page.getByRole("complementary", { name: "Sources" });
+	const sideBar = page.getByRole("complementary", { name: "Sorzs" });
 	await expect(sideBar.getByText(name)).toBeVisible();
 
 	await page.getByRole("textbox", { name: "Query" }).fill(query);

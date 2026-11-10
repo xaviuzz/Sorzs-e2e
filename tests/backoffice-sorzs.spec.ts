@@ -1,13 +1,13 @@
 import { expect, type Page, test } from "@playwright/test";
 import { type Credentials, logIn, xaviuzz } from "./login";
 
-async function addSource(page: Page, address: string) {
+async function addSorz(page: Page, address: string) {
 	await page.getByRole("button", { name: "Add Sorz" }).click();
 	await page.getByRole("textbox", { name: "URL" }).fill(address);
 	await page.getByRole("textbox", { name: "Title" }).fill(address);
 	await page.getByRole("button", { name: "Add", exact: true }).click();
 	await expect(
-		page.getByRole("complementary", { name: "Sources" }).getByText(address),
+		page.getByRole("complementary", { name: "Sorzs" }).getByText(address),
 	).toBeVisible();
 }
 
@@ -28,7 +28,7 @@ async function logOut(page: Page) {
 	await expect(page.getByRole("button", { name: "Enter" })).toBeVisible();
 }
 
-test("the admin sees every registered source in address order with its users", async ({
+test("the admin sees every registered sorz in address order with its users", async ({
 	page,
 }) => {
 	const unique = crypto.randomUUID();
@@ -38,12 +38,12 @@ test("the admin sees every registered source in address order with its users", a
 	const friend = { username: `user-${unique}`, password: "a-secret" };
 	await logIn(page, xaviuzz);
 	await registerUser(page, friend);
-	await addSource(page, first);
-	await addSource(page, common);
+	await addSorz(page, first);
+	await addSorz(page, common);
 	await logOut(page);
 	await logIn(page, friend);
-	await addSource(page, common);
-	await addSource(page, last);
+	await addSorz(page, common);
+	await addSorz(page, last);
 	await logOut(page);
 	await logIn(page, xaviuzz);
 

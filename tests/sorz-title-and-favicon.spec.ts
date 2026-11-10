@@ -3,7 +3,7 @@ import { logIn } from "./login";
 
 const sampleSite = process.env.SAMPLE_SITE_URL ?? "http://localhost:5373";
 
-test("a source added with no name is shown by its page title and favicon", async ({
+test("a sorz added with no name is shown by its page title and favicon", async ({
 	page,
 }) => {
 	const address = `${sampleSite}/${crypto.randomUUID()}`;
@@ -22,7 +22,7 @@ test("a source added with no name is shown by its page title and favicon", async
 	).toBeVisible();
 	await page.getByRole("button", { name: "Add", exact: true }).click();
 
-	const sideBar = page.getByRole("complementary", { name: "Sources" });
+	const sideBar = page.getByRole("complementary", { name: "Sorzs" });
 	await expect(sideBar.getByText("Sorzs Sample Page")).toBeVisible();
 	await expect(
 		sideBar.getByRole("img", { name: "Favicon of Sorzs Sample Page" }),

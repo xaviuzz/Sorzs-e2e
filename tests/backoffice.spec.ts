@@ -16,6 +16,6 @@ test("the admin enters the backoffice, switches sections and goes back", async (
 
 	await page.getByRole("button", { name: "Back to Sorzs" }).click();
 	await expect(
-		page.getByRole("complementary", { name: "Sources" }),
+		page.getByRole("complementary", { name: "Sorzs" }),
 	).toBeVisible();
 });
