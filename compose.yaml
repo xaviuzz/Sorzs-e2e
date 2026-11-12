@@ -2,7 +2,7 @@ services:
   backend:
     build:
       context: ${BACKEND_DIR:-../backend}
-      network: host
+      network: ${BUILD_NETWORK:-host}
     network_mode: host
     environment:
       PORT: ${BACKEND_PORT:-3100}
@@ -23,7 +23,7 @@ services:
   frontend:
     build:
       context: ${FRONTEND_DIR:-../frontend}
-      network: host
+      network: ${BUILD_NETWORK:-host}
     network_mode: host
     environment:
       PORT: ${FRONTEND_PORT:-5273}
